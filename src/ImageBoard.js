@@ -29,12 +29,12 @@ class ImageForm extends Component {
   handleChange(e) {
     e.preventDefault();
     this.setState({[e.target.name]: e.target.value});
-    console.log(e.target.value);
   }
 
   handleSubmit(e) {
     e.preventDefault();
     this.props.addImg(this.state);
+    this.setState({url: '', caption: ''});
   }
 
   render() {
@@ -42,9 +42,9 @@ class ImageForm extends Component {
       <form onSubmit={this.handleSubmit}>
         <div className="imgForm">
           <label htmlFor="url">Add an Image URL</label>
-          <input id="url" name="url" name='url' onChange={this.handleChange} placeholder="enter url" />
+          <input id="url" type="url" name='url' onChange={this.handleChange} value={this.state.url} placeholder="enter url" />
           <label htmlFor="caption">Add an Image Caption</label>
-          <textarea rows="2" id="caption" name='caption' onChange={this.handleChange} placeholder="caption here" />
+          <textarea rows="2" id="caption" name='caption' onChange={this.handleChange} value={this.state.caption} placeholder="caption here" />
           <button>Submit Image</button>
         </div>
       </form>
@@ -82,20 +82,13 @@ class ImageBoard extends Component {
     this.setState({images})
   }
 
-  addCaption(caption) {
+  addImg(image) {
     let images = [...this.state.images];
-    images.push(caption);
-    this.setState({images})
-  }
-
-  addImg(url) {
-    let images = [...this.state.images];
-    images.push(url);
+    images.push(image);
     this.setState({images});
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="imgboard">
         <ImageForm addImg={this.addImg} />
